@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8" />
+  <title>SCP Generator</title>
+  <link rel="stylesheet" href="public/style.css" />
+</head>
+<body>
+  <nav>
+    <button onclick="show('about')">Über uns</button>
+    <button onclick="show('db')">SCP Berichte</button>
+    <button onclick="show('gen')">SCP Generator</button>
+  </nav>
+
+  <section id="about">
+    <iframe src="https://scp-wiki.wikidot.com/scp-series" width="100%" height="600px"></iframe>
+  </section>
+
+  <section id="db" style="display:none;">
+    <iframe src="https://scp-wiki.wikidot.com/scp-series-de" width="100%" height="600px"></iframe>
+  </section>
+
+  <section id="gen" style="display:none;">
+    <h2>SCP Generator</h2>
+    <input id="class" placeholder="Objektklasse" /><br />
+    <input id="type" placeholder="Typ" /><br />
+    <input id="risk" placeholder="Gefahr" /><br />
+    <input id="origin" placeholder="Herkunft" /><br />
+    <input id="discovery" placeholder="Fundort" /><br />
+    <input id="theme" placeholder="Thema" /><br />
+    <button onclick="generate()">Generieren</button>
+
+    <h3 id="title"></h3>
+    <pre id="description"></pre>
+  </section>
+
+  <script>
+    function show(id) {
+      document.getElementById('about').style.display = 'none';
+      document.getElementById('db').style.display = 'none';
+      document.getElementById('gen').style.display = 'none';
+      document.getElementById(id).style.display = 'block';
+    }
+
+    async function generate() {
+      const payload = {
+        class: document.getElementById('class').value,
+        type: document.getElementById('type').value,
+        risk: document.getElementById('risk').value,
+        origin: document.getElementById('origin').value,
+        discovery: document.getElementById('discovery').value,
+        theme: document.getElementById('theme').value
+      };
+
+      const res = await fetch('/api/generate', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(payload)
+      });
+
+      const data = await res.json();
+      document.getElementById('title').innerText = data.title;
+      document.getElementById('description').innerText = data.description;
+    }
+  </script>
+</body>
+</html>
