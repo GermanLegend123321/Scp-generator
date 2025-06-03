@@ -1,0 +1,21 @@
+body {
+  background: #111;
+  color: #eee;
+  font-family: monospace;
+  padding: 20px;
+}
+nav button {
+  margin: 5px;
+  padding: 10px;
+  background: #222;
+  border: 1px solid #555;
+  color: #fff;
+}
+input {
+  margin: 5px;
+  padding: 6px;
+  width: 95%;
+  background: #222;
+  color: #fff;
+  border: 1px solid #444;
+}
